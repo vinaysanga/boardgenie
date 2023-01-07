@@ -673,3 +673,9 @@ Caused by: org.h2.jdbc.JdbcSQLInvalidAuthorizationSpecException: Wrong user name
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:510)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
 	... 88 more
+2023-01-07 18:34:06 jdbc[63]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "'""On the other hand, we denounce with righteous indignation and dislike men who ... (998)"; SQL statement:
+insert into task (description, name, id) values (?, ?, ?) [22001-214]
+2023-01-07 18:35:11 jdbc[64]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DESCRIPTION CHARACTER VARYING(255)": "'On the other hand, we denounce with righteous indignation and dislike men who a... (996)"; SQL statement:
+insert into task (description, name, id) values (?, ?, ?) [22001-214]

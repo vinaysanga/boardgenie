@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/api/")
+@CrossOrigin(origins = "http://localhost:3000/")
 public class BoardController {
 
     private final BoardService boardService;
@@ -29,12 +31,12 @@ public class BoardController {
         this.boardService = boardService;
     }
 
-    @GetMapping("/getTask")
-    public Task getTask(@RequestParam Long id){
+    @GetMapping(value = "/getTask", produces = {"application/json"})
+    public Task getTask(@RequestParam Long id) throws InterruptedException {
         return boardService.getTask(id);
     }
 
-    @GetMapping("/getAllTasks")
+    @GetMapping(value = "/getAllTasks")
     public List<Task> getAllTasks(){
         return boardService.getAllTasks();
     }

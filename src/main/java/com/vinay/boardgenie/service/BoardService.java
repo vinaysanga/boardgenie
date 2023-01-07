@@ -4,6 +4,7 @@ import com.vinay.boardgenie.bean.Task;
 import com.vinay.boardgenie.repository.TaskRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,7 +36,8 @@ public class BoardService {
      * @return List of tasks
      */
     public List<Task> getAllTasks() {
-        Iterable<Task> tasks = taskRepository.findAll();
+        Iterable<Task> tasks = taskRepository.findByOrderByIdDesc();
+        System.out.println("Fetching tasks by ID Desc");
         return StreamSupport.stream(tasks.spliterator(), false).collect(Collectors.toList());
     }
 
