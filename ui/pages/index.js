@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from "../components/Card";
 import AddCard from "../components/AddCard";
-import useSWR from "swr";
+import useSWR, {useSWRConfig} from "swr";
 import {PacmanLoader} from "react-spinners";
 import Head from "next/head";
 
@@ -10,8 +10,9 @@ const fetcher = async (url) =>{
     return await res.json()
 }
 
-function Index(props) {
+function Index() {
     const {data, error, isLoading} = useSWR('http://localhost:8080/api/getAllTasks', fetcher);
+    const {mutate} = useSWRConfig()
     if(error) return (<div>Some error occurred while retrieving details for the task. Please check the logs</div>)
     if(isLoading) return (
         <PacmanLoader color="#abc234"/>
@@ -24,7 +25,7 @@ function Index(props) {
             <div className='flex flex-col'>
                 <div className='text-9xl text-center'>Welcome</div>
                 <div className='grid grid-cols-6'>
-                    <AddCard/>
+                    <AddCard callback = {mutate}/>
                     {data.map( task =>
                         <Card key={task.id} id={task.id} title={task.name} description={task.description}/>
                     )}

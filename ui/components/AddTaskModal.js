@@ -1,6 +1,6 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useRef} from 'react';
 
-function AddTaskModal({isVisible, closeModal}) {
+function AddTaskModal({isVisible, closeModal, callback}) {
     const nameRef = useRef(null);
     const descRef = useRef(null);
     const save = async (event) => {
@@ -17,6 +17,7 @@ function AddTaskModal({isVisible, closeModal}) {
         const data = await res.json();
         console.log(data);
         closeModal()
+        callback('http://localhost:8080/api/getAllTasks')
     }
     return (
         <>
