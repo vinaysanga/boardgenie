@@ -1,9 +1,6 @@
 package com.vinay.boardgenie.bean;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +17,7 @@ public class Task {
     @NotNull(message = "ID must not be NULL")
     private Long id;
     private String name;
+    @Column(columnDefinition = "TEXT", length = 20480)
     private String description;
 
 }

@@ -9,13 +9,11 @@ function AddTaskModal({isVisible, closeModal, callback}) {
             name: nameRef.current.value,
             description: descRef.current.value
         }
-        const res = await fetch('http://localhost:8080/api/saveTask',{
+        await fetch('http://localhost:8080/api/saveTask',{
             method: 'POST',
             body: JSON.stringify(task),
             headers: {'Content-Type': 'application/json'}
-        })
-        const data = await res.json();
-        console.log(data);
+        }).then(result => console.log(result))
         closeModal()
         callback('http://localhost:8080/api/getAllTasks')
     }

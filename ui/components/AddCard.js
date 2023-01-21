@@ -9,7 +9,8 @@ function AddCard(props) {
     return (
         <>
             <div
-                className="flex items-center justify-center bg-white m-4 h-48 shadow-md rounded-lg rounded-lg bg-yellow-50 hover:shadow-[0_5px_5px_-3px_rgba(0,0,0,0.3)] hover:border-opacity-0 transform hover:scale-110 duration-100"
+                className="flex items-center justify-center bg-yellow-50 m-4 p-2 h-48 shadow-md rounded-lg hover:shadow-[0_5px_15px_-3px_rgba(0,0,0,0.3)]
+            hover:font-medium transform hover:scale-110 duration-100"
                 onClick={()=>setShowModal(true)}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.0}
                          stroke="#9ca3af" className="w-32 h-32">
