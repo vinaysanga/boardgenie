@@ -9,13 +9,20 @@ function AddTaskModal({isVisible, closeModal, callback}) {
             name: nameRef.current.value,
             description: descRef.current.value
         }
-        await fetch('http://localhost:8080/api/saveTask',{
-            method: 'POST',
-            body: JSON.stringify(task),
-            headers: {'Content-Type': 'application/json'}
-        }).then(result => console.log(result))
-        closeModal()
+        try{
+            const res = await fetch('http://localhost:8080/api/saveTask',{
+                method: 'POST',
+                body: JSON.stringify(task),
+                headers: {'Content-Type': 'application/json'}
+            })
+            if(!res.ok){
+                console.log(await res.text())
+            }
+        }catch (error){
+            console.log(error)
+        }
         callback('http://localhost:8080/api/getAllTasks')
+        closeModal()
     }
     return (
         <>
@@ -53,14 +60,14 @@ function AddTaskModal({isVisible, closeModal, callback}) {
                                 {/*footer*/}
                                 <div
                                     className="flex items-center justify-end p-6 space-x-4">
-                                    <button className=" font-bold uppercase px-6 py-2 text-gray-700 text-sm rounded-lg hover:shadow-md ease-linear transition-all duration-150 hover:text-gray-900 hover:bg-gray-50"
+                                    <button className=" font-bold uppercase px-6 py-2 text-gray-700 text-sm rounded-lg hover:shadow-md ease-linear transition-all duration-150 hover:text-white hover:bg-black"
                                         type="button"
                                         onClick={closeModal}
                                     >
                                         Close
                                     </button>
                                     <button
-                                        className="font-bold uppercase px-6 py-2 text-gray-700 text-sm rounded-lg hover:shadow-md ease-linear transition-all duration-150 hover:text-gray-900 hover:bg-gray-50"
+                                        className="font-bold uppercase px-6 py-2 text-gray-700 text-sm rounded-lg hover:shadow-md ease-linear transition-all duration-150 hover:text-white hover:bg-black"
                                         type="submit"
                                         onClick={save}
                                     >

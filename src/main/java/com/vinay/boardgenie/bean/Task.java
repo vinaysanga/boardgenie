@@ -6,6 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * This bean represents the Task object
+ * @author vinaysanga
+ */
 @Data
 @Entity
 @NoArgsConstructor

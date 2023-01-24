@@ -1,35 +1,38 @@
 import React from 'react';
-import useSWR, {useSWRConfig} from 'swr'
-import {router} from "next/client";
+import {useRouter} from "next/router";
+import useSWR, {useSWRConfig} from "swr";
 import {PacmanLoader} from "react-spinners";
 
-const fetcher = async (url) => {
-    const res = await fetch(url)
+const fetchTask = async (url) => {
+    const res = await fetch(url, {cache: 'no-cache'})
     return await res.json()
 }
 
+const removeTask = async (id) => {
+    const res = (await fetch('http://localhost:8080/api/deleteTaskById?id=' + id,
+        {
+            method: 'DELETE'
+        }))
+    return await res.text()
+}
 const Task = () => {
-    const query = router.query
-    const {data, error, isLoading} = useSWR('http://localhost:8080/api/getTask?id=' + query['taskId'], fetcher)
+    const query = useRouter().query
+    const router = useRouter()
+    const {data, error, isLoading} = useSWR('http://localhost:8080/api/getTask?id=' + query['taskId'], fetchTask)
     const {mutate} = useSWRConfig()
     if (error) return (<div>Some error occurred while retrieving details for the task. Please check the logs</div>)
     if (isLoading) return (
         <PacmanLoader color="#abc234"/>
     )
-    const removeTask = async (id) =>{
-        const res = (await fetch('http://localhost:8080/api/deleteTaskById?id=' + id,
-            {
-                method: 'DELETE'
-            }))
-        return mutate('http://localhost:8080/api/getAllTasks')
-    }
     return (
         <>
-            {data.id}<br/>
-            {data.name}<br/>
-            {data.description}<br/>
-            <button onClick={() =>{
-                removeTask(data.id).then()
+            <div>
+                {data.description}
+            </div>
+            <button onClick={() => {
+                removeTask(data.id).then(() => {
+                    mutate('http://localhost:8080/api/getAllTasks').then()
+                })
                 router.back()
             }}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
@@ -39,8 +42,7 @@ const Task = () => {
                 </svg>
             </button>
         </>
-    );
-};
+    )
+}
 
 export default Task;
-

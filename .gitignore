@@ -33,4 +33,7 @@ build/
 .vscode/
 
 ### DB File ###
-/data/*
+data/*
+
+### Log files ###
+logs/*
