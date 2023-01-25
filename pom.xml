@@ -109,12 +109,12 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>yarn build</id>
+                        <id>yarn export</id>
                         <goals>
                             <goal>yarn</goal>
                         </goals>
                         <configuration>
-                            <arguments>build</arguments>
+                            <arguments>export</arguments>
                         </configuration>
                     </execution>
                 </executions>
