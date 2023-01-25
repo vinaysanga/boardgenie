@@ -1,6 +1,5 @@
 # Boardgenie
 
----
 A simple to-do board. 
 This is just a hobby project that I created to explore spring-boot and next.js in detail.
 
