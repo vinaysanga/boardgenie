@@ -53,7 +53,7 @@ const CardInfo = (props) => {
     return <>
         <div className='flex p-10 space-x-5 justify-center'>
             <aside>
-                <button className="font-bold uppercase px-6 py-2 text-gray-700 text-sm rounded-lg hover:shadow-md
+                <button title='Go Back' className="font-bold uppercase px-6 py-2 text-gray-700 text-sm rounded-lg hover:shadow-md
                             ease-linear transition-all duration-150 hover:text-white hover:bg-black"
                         type="button"
                         onClick={router.back}
@@ -63,7 +63,7 @@ const CardInfo = (props) => {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
                     </svg>
                 </button>
-                <button className="font-bold uppercase px-6 py-2 text-gray-700 text-sm rounded-lg hover:shadow-md
+                <button title='Edit task' className="font-bold uppercase px-6 py-2 text-gray-700 text-sm rounded-lg hover:shadow-md
                 ease-linear transition-all duration-150 hover:text-white hover:bg-black"
                         type="button"
                         onClick={setEnabled}
@@ -74,7 +74,7 @@ const CardInfo = (props) => {
                               d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/>
                     </svg>
                 </button>
-                <button className="font-bold uppercase px-6 py-2 text-gray-700 text-sm rounded-lg hover:shadow-md
+                <button title='Delete task' className="font-bold uppercase px-6 py-2 text-gray-700 text-sm rounded-lg hover:shadow-md
                 ease-linear transition-all duration-150 hover:text-white hover:bg-black"
                         type="button"
                         onClick={() => {
@@ -124,6 +124,7 @@ const CardInfo = (props) => {
                                 invisible"
                             type="submit"
                             onClick={save}
+
                     >
                         Save
                     </button>
