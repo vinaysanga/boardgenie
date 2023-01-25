@@ -8,6 +8,9 @@ This is just a hobby project that I created to explore spring-boot and next.js i
 - Uses database to store the tasks.
 - Standalone java project. You can run the entire webapp just with the jar file.
 
+## Requirements:
+- Java 19.0.1 or higher.
+
 ## Usage:
 1. Clone the repository.
    ```shell
