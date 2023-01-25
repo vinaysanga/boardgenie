@@ -10,7 +10,7 @@ function AddTaskModal({isVisible, closeModal, callback}) {
             description: descRef.current.value
         }
         try{
-            const res = await fetch('http://localhost:8080/api/saveTask',{
+            const res = await fetch('/api/saveTask',{
                 method: 'POST',
                 body: JSON.stringify(task),
                 headers: {'Content-Type': 'application/json'}
@@ -21,7 +21,7 @@ function AddTaskModal({isVisible, closeModal, callback}) {
         }catch (error){
             console.log(error)
         }
-        callback('http://localhost:8080/api/getAllTasks')
+        callback('/api/getAllTasks')
         closeModal()
     }
     return (

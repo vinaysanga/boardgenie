@@ -9,7 +9,7 @@ const fetchTask = async (url) => {
 }
 
 const removeTask = async (id) => {
-    const res = (await fetch('http://localhost:8080/api/deleteTaskById?id=' + id,
+    const res = (await fetch('/api/deleteTaskById?id=' + id,
         {
             method: 'DELETE'
         }))
@@ -18,7 +18,7 @@ const removeTask = async (id) => {
 const Task = () => {
     const query = useRouter().query
     const router = useRouter()
-    const {data, error, isLoading} = useSWR('http://localhost:8080/api/getTask?id=' + query['taskId'], fetchTask)
+    const {data, error, isLoading} = useSWR('/api/getTask?id=' + query['taskId'], fetchTask)
     const {mutate} = useSWRConfig()
     if (error) return (<div>Some error occurred while retrieving details for the task. Please check the logs</div>)
     if (isLoading) return (
@@ -31,7 +31,7 @@ const Task = () => {
             </div>
             <button onClick={() => {
                 removeTask(data.id).then(() => {
-                    mutate('http://localhost:8080/api/getAllTasks').then()
+                    mutate('/api/getAllTasks').then()
                 })
                 router.back()
             }}>

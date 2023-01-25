@@ -10,12 +10,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+/**
+ * Service to cater to all the board related operations.
+ *
+ * @author vinaysanga
+ */
 @Service
 @Slf4j
 public class BoardService {
 
     private final TaskRepository taskRepository;
 
+    /**
+     * Inject the repository bean
+     *
+     * @param taskRepository The task repository
+     */
     @Autowired
     public BoardService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
@@ -56,6 +66,6 @@ public class BoardService {
      * @param ids The task ids to be deleted
      */
     public void deleteByIds(List<Long> ids) {
-            taskRepository.deleteAllById(ids);
+        taskRepository.deleteAllById(ids);
     }
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * This bean represents the Task object
+ *
  * @author vinaysanga
  */
 @Data

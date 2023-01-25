@@ -8,6 +8,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 /**
  * The Exception controller which will intercept all the exceptions.
+ *
+ * @author vinaysanga
  */
 @ControllerAdvice
 @Slf4j

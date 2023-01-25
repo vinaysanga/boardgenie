@@ -11,7 +11,7 @@ const fetcher = async (url) =>{
 }
 
 function Index() {
-    const {data, error, isLoading} = useSWR('http://localhost:8080/api/getAllTasks', fetcher);
+    const {data, error, isLoading} = useSWR('/api/getAllTasks', fetcher);
     const {mutate} = useSWRConfig()
     if(error) return (<div>Some error occurred while retrieving details for the task. Please check the logs</div>)
     if(isLoading) return (
