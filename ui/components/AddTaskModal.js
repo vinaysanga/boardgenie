@@ -28,9 +28,9 @@ function AddTaskModal({isVisible, closeModal, callback}) {
         <>
             {isVisible && (
                 <>
-                    <div className="opacity-10 fixed inset-0 z-40 bg-black"></div>
+                    <div className="opacity-10 fixed inset-0 z-10 bg-black"></div>
                     <div
-                        className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                        className="backdrop-blur-sm justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                         <div className="relative w-auto my-6 mx-auto max-w-3xl">
                             {/*content*/}
                             <div
@@ -55,10 +55,12 @@ function AddTaskModal({isVisible, closeModal, callback}) {
                                 {/*body*/}
                                 <div className="relative px-8 py-4 space-y-8 flex-auto">
                                     <input type="text" id="task-name" ref={nameRef}
-                                           className="rounded-lg p-2 w-full text-sm text-gray-900 bg-gray-50 hover:bg-gray-100 focus:outline-gray-200 focus:bg-gray-50 focus:ring-0"
+                                           className='rounded-lg p-2 w-full text-sm text-gray-900 bg-gray-50 hover:bg-gray-100
+                                           focus: outline-1 outline-gray-200 focus:bg-gray-50 transition-all'
                                            placeholder="Task name"/>
                                     <textarea id='task-description' ref={descRef}
-                                              className="rounded-lg p-2 w-full h-48 text-sm text-gray-900 bg-gray-50 hover:bg-gray-100 focus:outline-gray-200 focus:bg-gray-50 overflow-visible"
+                                              className="rounded-lg p-2 w-full h-48 text-sm text-gray-900 bg-gray-50 hover:bg-gray-100
+                                              focus: outline-1 outline-gray-200 focus:bg-gray-50 transition-all overflow-visible"
                                               placeholder="Description"/>
                                 </div>
                                 {/*footer*/}

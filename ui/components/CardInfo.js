@@ -2,6 +2,11 @@ import React, {useRef, useState} from 'react';
 import {useRouter} from "next/navigation";
 
 
+function changeVisibility(setter, visibility, iconId) {
+    setter(visibility)
+    document.getElementById(iconId).classList.toggle('invisible')
+}
+
 const CardInfo = (props) => {
     const {id, name, description} = props
     const router = useRouter()
@@ -9,31 +14,11 @@ const CardInfo = (props) => {
     const [isDescEditable, setDescEditable] = useState(false)
     const nameRef = useRef(null)
     const descRef = useRef(null)
-    const setEnabled = () => {
-        setTitleEditable(true)
-        setDescEditable(true)
-        document.getElementById('card-info-close-btn').classList.remove('invisible')
-        document.getElementById('card-info-save-btn').classList.remove('invisible')
-        const desc = document.getElementById('desc-div')
-        setTimeout(function () {
-            desc.focus();
-        }, 0);
-    }
-
-    const setDisabled = () => {
-        setTitleEditable(false)
-        setDescEditable(false)
-        document.getElementById('card-info-close-btn').classList.add('invisible')
-        document.getElementById('card-info-save-btn').classList.add('invisible')
-    }
-
     const save = async () => {
         const task = {
             id: id,
-            name: nameRef.current.innerHTML
-            ,
+            name: nameRef.current.innerHTML,
             description: descRef.current.innerHTML
-
         }
         try {
             const res = await fetch('/api/saveTask', {
@@ -41,20 +26,19 @@ const CardInfo = (props) => {
                 body: JSON.stringify(task),
                 headers: {'Content-Type': 'application/json'}
             })
-            if (!res.ok) {
+            if (!res.ok)
                 console.log(await res.text())
-            }
+            if (res.ok)
+                props.mutate('/api/getAllTasks')
         } catch (error) {
             console.log(error)
         }
-        await props.mutate('/api/getAllTasks')
-        router.back()
     }
     return <>
-        <div className='flex p-10 space-x-5 justify-center'>
+        <div className='p-40 pt-10 justify-center'>
             <aside>
-                <button title='Go Back' className="font-bold uppercase px-6 py-2 text-gray-700 text-sm rounded-lg hover:shadow-md
-                            ease-linear transition-all duration-150 hover:text-white hover:bg-black"
+                <button title='Go Back' className="px-6 py-2 text-gray-600 text-sm rounded-lg hover:shadow-sm
+                ease-linear transition hover:text-white hover:bg-black hover:scale-105"
                         type="button"
                         onClick={router.back}
                 >
@@ -63,19 +47,8 @@ const CardInfo = (props) => {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
                     </svg>
                 </button>
-                <button title='Edit task' className="font-bold uppercase px-6 py-2 text-gray-700 text-sm rounded-lg hover:shadow-md
-                ease-linear transition-all duration-150 hover:text-white hover:bg-black"
-                        type="button"
-                        onClick={setEnabled}
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
-                         stroke="currentColor" className="w-6 h-6">
-                        <path strokeLinecap="round" strokeLinejoin="round"
-                              d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/>
-                    </svg>
-                </button>
-                <button title='Delete task' className="font-bold uppercase px-6 py-2 text-gray-700 text-sm rounded-lg hover:shadow-md
-                ease-linear transition-all duration-150 hover:text-white hover:bg-black"
+                <button title='Delete task' className="px-6 py-2 text-gray-600 text-sm rounded-lg hover:shadow-sm
+                ease-linear transition hover:text-white hover:bg-black hover:scale-105"
                         type="button"
                         onClick={() => {
                             props.removeTask(id).then(
@@ -91,43 +64,70 @@ const CardInfo = (props) => {
                     </svg>
                 </button>
             </aside>
-            <section className='p-5 min-w-full min-h-full'>
+            <section>
                 <div id='title-div'
-                     className='text-5xl p-2 font-medium text-center focus:outline-gray-200 focus:bg-gray-50'
+                     className='flex justify-between p-2 pr-0 outline-0 focus: outline-1 outline-gray-200 focus:bg-gray-50 focus:px-2 transition-all'
                      contentEditable={isTitleEditable} suppressContentEditableWarning={true}
-                     ref={nameRef}
+                     onBlur={() => {
+                         changeVisibility(setTitleEditable, false, 'title-edit-icon')
+                         save()
+                     }}
+                     onKeyDown={event => {
+                         if (event.key === 'Enter') {
+                             document.getElementById('title-div').blur()
+                         }
+                     }}
                 >
-                    {name}
+                    <h2 className='text-5xl font-medium text-center grow' ref={nameRef}>
+                        {name}
+                    </h2>
+                    <svg id='title-edit-icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                         className="w-5 h-5 fill-gray-300 hover:scale-110 hover:fill-black"
+                         onClick={() => {
+                             changeVisibility(setTitleEditable, true, 'title-edit-icon');
+                             const element = document.getElementById('title-div')
+                             setTimeout(() => element.focus(), 0);
+                             document.getSelection().collapseToEnd();
+                         }
+                         }
+                    >
+                        <title>Edit title</title>
+                        <path
+                            d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z"/>
+                        <path
+                            d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z"/>
+                    </svg>
                 </div>
                 <hr/>
                 <div id='desc-div'
-                     className='text-justify p-2 focus:outline-gray-200 focus:bg-gray-50 h-full'
+                     className='flex flex-col outline-0 focus: outline-1 outline-gray-200 focus:bg-gray-50 focus:px-2 transition-all'
                      contentEditable={isDescEditable} suppressContentEditableWarning={true}
-                     ref={descRef}
+                     onBlur={() => {
+                         changeVisibility(setDescEditable, false, 'desc-edit-icon')
+                         save()
+                     }}
                 >
-                    {description}
-                </div>
-                <div
-                    className="flex items-center justify-end p-6 space-x-4">
-                    <button id='card-info-close-btn'
-                            className="font-bold uppercase px-6 py-2 text-gray-700 text-sm rounded-lg
-                                hover:shadow-md ease-linear transition-all duration-150 hover:text-white hover:bg-black
-                                invisible"
-                            type="button"
-                            onClick={setDisabled}
-                    >
-                        Cancel
-                    </button>
-                    <button id='card-info-save-btn'
-                            className="font-bold uppercase px-6 py-2 text-gray-700 text-sm rounded-lg
-                                hover:shadow-md ease-linear transition-all duration-150 hover:text-white hover:bg-black
-                                invisible"
-                            type="submit"
-                            onClick={save}
-
-                    >
-                        Save
-                    </button>
+                    <div className='self-end'>
+                        <svg id='desc-edit-icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                             className="w-5 h-5 fill-gray-300 hover:scale-110 hover:fill-black"
+                             onClick={() => {
+                                 changeVisibility(setDescEditable, true, 'desc-edit-icon');
+                                 const element = document.getElementById('desc-div')
+                                 setTimeout(() => element.focus(), 0);
+                             }
+                             }
+                        >
+                            <title>Edit description</title>
+                            <path
+                                d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z"/>
+                            <path
+                                d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z"/>
+                        </svg>
+                    </div>
+                    <p className='text-justify'
+                       ref={descRef}>
+                        {description}
+                    </p>
                 </div>
             </section>
         </div>
