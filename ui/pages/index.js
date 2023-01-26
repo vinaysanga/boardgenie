@@ -1,6 +1,5 @@
 import React from 'react';
 import useSWR, {useSWRConfig} from "swr";
-import {FadeLoader} from "react-spinners";
 import AddCard from "../components/AddCard";
 import Card from "../components/Card";
 import Head from "next/head";
@@ -26,14 +25,18 @@ function Index() {
             <Head>
                 <title>Board-genie</title>
             </Head>
-            <div className='flex flex-col p-10'>
-                <div className='text-9xl text-center'>Welcome</div>
-                <div className='grid grid-cols-6'>
-                    <AddCard callback={mutate}/>
-                    {data.map(task =>
-                        <Card key={task.id} id={task.id} title={task.name} description={task.description}/>
-                    )}
-                </div>
+            <div className='w-full p-10'>
+                <header className='w-full justify-center fixed top-0 left-0 py-5 z-20 bg-slate-300 shadow-md rounded-b'>
+                    <h2 className='text-9xl text-center text-gray-900'>Welcome</h2>
+                </header>
+                <main className='pt-32'>
+                    <div className='grid grid-cols-5'>
+                        <AddCard callback={mutate}/>
+                        {data.map(task =>
+                            <Card key={task.id} id={task.id} title={task.name} description={task.description}/>
+                        )}
+                    </div>
+                    </main>
             </div>
         </>
     );

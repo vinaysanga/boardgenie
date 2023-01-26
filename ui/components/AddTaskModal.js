@@ -1,4 +1,6 @@
 import React, {useRef} from 'react';
+import Button from "./Button";
+import {XMarkIcon} from "@heroicons/react/24/solid";
 
 function AddTaskModal({isVisible, closeModal, callback}) {
     const nameRef = useRef(null);
@@ -28,7 +30,7 @@ function AddTaskModal({isVisible, closeModal, callback}) {
         <>
             {isVisible && (
                 <>
-                    <div className="opacity-10 fixed inset-0 z-10 bg-black"></div>
+                    <div className="opacity-10 fixed inset-0 z-40 bg-black"></div>
                     <div
                         className="backdrop-blur-sm justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                         <div className="relative w-auto my-6 mx-auto max-w-3xl">
@@ -45,11 +47,7 @@ function AddTaskModal({isVisible, closeModal, callback}) {
                                         className="p-1 float-right leading-none font-light hover:bg-gray-300 font-bold hover:rounded-md transform hover:duration-200"
                                         onClick={closeModal}
                                     >
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                             strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                            <path strokeLinecap="round" strokeLinejoin="round"
-                                                  d="M6 18L18 6M6 6l12 12"/>
-                                        </svg>
+                                        <XMarkIcon className='w-6 h-6'/>
                                     </button>
                                 </div>
                                 {/*body*/}
@@ -66,20 +64,8 @@ function AddTaskModal({isVisible, closeModal, callback}) {
                                 {/*footer*/}
                                 <div
                                     className="flex items-center justify-end p-6 space-x-4">
-                                    <button
-                                        className=" font-bold uppercase px-6 py-2 text-gray-700 text-sm rounded-lg hover:shadow-md ease-linear transition-all duration-150 hover:text-white hover:bg-black"
-                                        type="button"
-                                        onClick={closeModal}
-                                    >
-                                        Close
-                                    </button>
-                                    <button
-                                        className="font-bold uppercase px-6 py-2 text-gray-700 text-sm rounded-lg hover:shadow-md ease-linear transition-all duration-150 hover:text-white hover:bg-black"
-                                        type="submit"
-                                        onClick={save}
-                                    >
-                                        Save
-                                    </button>
+                                    <Button onClick={closeModal}>Close</Button>
+                                    <Button onClick={save}>Save</Button>
                                 </div>
                             </div>
                         </div>
