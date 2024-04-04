@@ -21,14 +21,13 @@ The app is containerized, and can be built and run as follows:
    cd boardgenie
    ```
 2. Build the image.
-```shell
-docker build -t boardgenie . 
-```
-3. Run the image. The following command maps the container port `8080` to your local port `8080`. \
-Please change the port if you get conflicts.
-```shell
-docker run -dp 8080:8080 boardgenie
-```
+   ```shell
+   docker build -t boardgenie . 
+   ```
+3. Run the image. The following command maps the container port `8080` to your local port `8080`. Please change the port if you get conflicts.
+   ```shell
+   docker run -dp 8080:8080 boardgenie
+   ```
 
 ### B. Locally using Java
 1. Clone the repository.
