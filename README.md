@@ -12,7 +12,7 @@ This is just a hobby project that I created to explore spring-boot and next.js i
 - Java 19.0.1 or higher.
 
 ## Running the app
-### A. Using docker:
+### A. Using docker
 The app is containerized, and can be built and run as follows:
 1. Clone the repository.
    ```shell
@@ -28,7 +28,7 @@ The app is containerized, and can be built and run as follows:
    ```shell
    docker run -dp 8080:8080 boardgenie
    ```
-
+4. Access the application at http://localhost:8080/
 ### B. Locally using Java
 1. Clone the repository.
    ```shell
@@ -45,4 +45,3 @@ The app is containerized, and can be built and run as follows:
    java -jar Boardgenie-0.0.1-SNAPSHOT.jar
    ```
 4. Access the application at http://localhost:8080/
-5. Fin.
